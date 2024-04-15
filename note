@@ -26,4 +26,9 @@
 5. Connect to Database
 
             Note: npm i mongoose
-                  npm i dotenv  
+                  npm i dotenv --> inorder to use process.env.MONGO
+
+6. Create User Model
+
+            Note: created a model for user 
+
