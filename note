@@ -1,2 +1,24 @@
 
 1. Install Reactjs and Tailwind css and create the first template
+
+            Note: Installed Reactjs and tailwind css and initialize the project
+
+2. Create Pages and Routes
+
+            Note: Installed react-router-dom inorder to use Route, Routes and BrowserRouter
+
+3. Create Header Component
+
+            Note: install npm i react-icons
+                - Create a header with title, search input and menu(Home,about, signIn)
+
+4. Create and run the server
+
+            Note: npm init -y  --> Inorder to install package.json in the root directory
+                  npm i express
+
+                inlcude below scripts inside package.json:
+                  scripts: {
+                    "dev": "nodemon api/index.js"
+                    "start":"node api/index.js"
+                  }  

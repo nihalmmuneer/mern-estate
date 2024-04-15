@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const Header = () => {
   return (
-    <header className="bg-slate-200 font-sans">
+    <header className="bg-slate-200">
       <div className="flex justify-between items-center p-3 max-w-6xl mx-auto text-sm sm:text-lg">
         <Link to="/">
           <h1 className="font-bold text-sm sm:text-xl">
