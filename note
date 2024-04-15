@@ -57,4 +57,7 @@
                     })
                   }
 
-8.
+8. Create sign up API route
+
+            Note: create auth.route.js and auth.controller.js
+                 - npm in bcryptjs inorder to encrypt password on entering to the database   
