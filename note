@@ -32,3 +32,29 @@
 
             Note: created a model for user 
 
+7. Create a test API route            
+
+            Note: create a user.router.js and user.controller.js
+                 
+                  index.js
+                  --------
+                  app.use("/api/user",userRouter)
+
+                  user.route.js
+                  -------------
+
+                  import express from "express"
+                  const router = express.Router();
+                  router.get("/test",test)
+                  export default router
+
+                  user.controller.js
+                  ------------------
+
+                  export const test = (req,res) => {
+                    res.json({
+                        message:"API Is Working!!!"
+                    })
+                  }
+
+8.
