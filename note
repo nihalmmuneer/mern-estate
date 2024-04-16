@@ -92,3 +92,25 @@
 12. Create signIn API route
 
             Note: npm i jsonwebtoken --> Inorder to create a token
+
+13. Complete sign in page functionality
+
+            Note: same as signup page 
+
+14. Add redux toolkit
+
+            Note: Add store.js, userSlice.js
+
+15. Add redux persist
+
+            Note: same as redux we need to use persistor
+                  
+                  npm i redux-persist
+
+16. Add Google OAuth functionality                  
+
+            Note: npm i firebase
+
+17. Update the header and make the profile page private
+
+            Note: 
