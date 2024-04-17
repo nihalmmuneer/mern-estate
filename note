@@ -124,4 +124,8 @@
 
 19. Complete image upload functionality
 
-            Note: 
+            Note: upload image into firebase
+
+20. Create update user API route
+
+            Note: npm i cookie-parser

@@ -55,14 +55,14 @@ export const google = async (req, res, next) => {
       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
       const newUser = new User({
         username:
-          name.split(" ").join("") + Math.random().toString(36).slice(-4),
+          name.toLowerCase().split(" ").join("") + Math.random().toString(36).slice(-4),
         email,
         password: hashedPassword,
         photo: googlePhoto,
       });
       await newUser.save();
       const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY);
-      const { password: pass, ...rest } = newUser._doc;
+      const { password, ...rest } = newUser._doc;
       res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
