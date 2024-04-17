@@ -129,3 +129,11 @@
 20. Create update user API route
 
             Note: npm i cookie-parser
+
+21. complete update user functionality
+
+            Note: call update api
+
+22. Add delete user functionality
+
+            Note;

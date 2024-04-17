@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import {
   getDownloadURL,
@@ -8,13 +10,24 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import app from "../firebase";
+import {
+  deleteFailure,
+  deleteSuccess,
+  updateFailure,
+  updateStart,
+  updateSuccess,
+} from "../../redux/user/userSlice";
 const Profile = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [filePerc, setFilePerc] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
   const [errorImage, setErrorImage] = useState(null);
+  const [imageUploadSuccess, setImageUploadSuccess] = useState(false);
   const [formData, setFormData] = useState({});
   const fileRef = useRef(null);
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (file) {
@@ -23,7 +36,36 @@ const Profile = () => {
       return;
     }
   }, [file]);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  console.log(formData);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        setSuccessMessage("");
+        return dispatch(updateFailure(data.message));
+      }
+      if (res.ok) {
+        dispatch(updateSuccess(data));
+        setImageUploadSuccess(false);
+        setSuccessMessage("Uploaded Successfully");
+      }
+    } catch (error) {
+      dispatch(updateFailure(error.message));
+      setSuccessMessage("");
+      return;
+    }
+  };
   const handleFileUpload = (file) => {
     console.log(file, "file");
     const storage = getStorage(app);
@@ -44,14 +86,35 @@ const Profile = () => {
       () =>
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
           setFormData({ ...formData, photo: downloadUrl });
+          setImageUploadSuccess(true);
           setErrorImage(null);
         })
     );
   };
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        return dispatch(deleteFailure(data.message));
+      }
+      if (res.ok) {
+        dispatch(deleteSuccess(data));
+        navigate("/sign-in");
+      }
+    } catch (error) {
+      dispatch(deleteFailure(error.message));
+    }
+  };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
-      <form className="flex  flex-col  gap-4 justify-center">
+      <form
+        className="flex  flex-col  gap-4 justify-center"
+        onSubmit={handleSubmit}
+      >
         <input
           type="file"
           accept="image/*"
@@ -72,7 +135,7 @@ const Profile = () => {
             <span className="text-slate-700">
               {`uploading image ${filePerc} %`}
             </span>
-          ) : filePerc === 100 ? (
+          ) : filePerc === 100 && imageUploadSuccess ? (
             <span>
               <span className="text-green-500">
                 Image Uploaded successfully
@@ -86,28 +149,38 @@ const Profile = () => {
           type="text"
           placeholder="username"
           id="username"
+          defaultValue={currentUser?.username}
           className="border p-3 rounded-lg"
+          onChange={handleChange}
         />
         <input
           type="email"
           placeholder="email"
           id="email"
+          defaultValue={currentUser?.email}
           className="border p-3 rounded-lg"
+          onChange={handleChange}
         />
         <input
           type="password"
           placeholder="password"
           id="password"
           className="border p-3 rounded-lg"
+          onChange={handleChange}
         />
-        <button className="bg-slate-700 p-3 text-white rounded-lg uppercase">
-          Update
+        <button
+          disabled={loading}
+          className="bg-slate-700 p-3 text-white rounded-lg uppercase"
+        >
+          {loading ? "Loading..." : "Update"}
         </button>
       </form>
-      <div className="flex text-red-700 justify-between mt-5 font-medium">
-        <span>Delete account</span>
+      <div className="flex text-red-700 justify-between mt-5 font-medium cursor-pointer">
+        <span onClick={handleDelete}>Delete account</span>
         <span>Sign out</span>
       </div>
+      <p className="text-red-700 text-center">{error ? error : ""}</p>
+      <p className="text-green-700 text-center">{successMessage}</p>
     </div>
   );
 };
