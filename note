@@ -113,4 +113,11 @@
 
 17. Update the header and make the profile page private
 
+            Note: - If the current User is available display the profile image in the header
+                    otherwise, display Sign In button.
+
+                  - Also create a private Route component where the profile component only available when the currentUser available otherwise redirect to sign-in page
+
+18. Complete profile page UI
+
             Note: 
