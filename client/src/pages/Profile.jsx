@@ -13,6 +13,9 @@ import app from "../firebase";
 import {
   deleteFailure,
   deleteSuccess,
+  signOutFailure,
+  signOutStart,
+  signOutSuccess,
   updateFailure,
   updateStart,
   updateSuccess,
@@ -90,6 +93,23 @@ const Profile = () => {
           setErrorImage(null);
         })
     );
+  };
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutStart());
+      const res = await fetch(`/api/auth/sign-out`);
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signOutFailure(data.message));
+        return;
+      }
+      if (res.ok) {
+        dispatch(signOutSuccess(data));
+      }
+    } catch (error) {
+      dispatch(signOutFailure(error.message));
+      return;
+    }
   };
   const handleDelete = async () => {
     try {
@@ -177,7 +197,7 @@ const Profile = () => {
       </form>
       <div className="flex text-red-700 justify-between mt-5 font-medium cursor-pointer">
         <span onClick={handleDelete}>Delete account</span>
-        <span>Sign out</span>
+        <span onClick={handleSignOut}>Sign out</span>
       </div>
       <p className="text-red-700 text-center">{error ? error : ""}</p>
       <p className="text-green-700 text-center">{successMessage}</p>
