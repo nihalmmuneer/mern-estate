@@ -140,4 +140,7 @@
 
 23. Add signout user functionality
 
-            Note:            
+            Note: remove cookies when signout
+
+24. Add create listing API route
+                        
