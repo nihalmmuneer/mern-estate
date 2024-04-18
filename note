@@ -143,4 +143,14 @@
             Note: remove cookies when signout
 
 24. Add create listing API route
-                        
+
+            Note: create a model for listing, list route, list controller
+
+25. Complete create listing page UI
+
+            Note: create a listing page UI
+
+26. Complete upload listing images functionality
+
+            Note: 
+

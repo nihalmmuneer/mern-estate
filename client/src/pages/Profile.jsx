@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import {
@@ -194,11 +194,20 @@ const Profile = () => {
         >
           {loading ? "Loading..." : "Update"}
         </button>
+        <Link to="/create-listing">
+          <button
+            type="button"
+            className="bg-green-700 text-white p-3 rounded-lg w-full"
+          >
+            Create Listing
+          </button>
+        </Link>
       </form>
       <div className="flex text-red-700 justify-between mt-5 font-medium cursor-pointer">
         <span onClick={handleDelete}>Delete account</span>
         <span onClick={handleSignOut}>Sign out</span>
       </div>
+
       <p className="text-red-700 text-center">{error ? error : ""}</p>
       <p className="text-green-700 text-center">{successMessage}</p>
     </div>
