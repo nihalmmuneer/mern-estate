@@ -187,7 +187,7 @@ const CreateListing = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex gap-3 flex-wrap">
+          <div className="flex  gap-6 sm:gap-3 flex-wrap">
             <div className="flex gap-2">
               <input
                 type="checkbox"
@@ -240,7 +240,7 @@ const CreateListing = () => {
               <span>Offer</span>
             </div>
           </div>
-          <div className="flex gap-6">
+          <div className="flex  gap-8 sm:gap-6">
             <div className="flex items-center gap-2">
               <input
                 type="number"

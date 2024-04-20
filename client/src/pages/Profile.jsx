@@ -25,6 +25,8 @@ const Profile = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [filePerc, setFilePerc] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [userListings, setUserListings] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorImage, setErrorImage] = useState(null);
   const [imageUploadSuccess, setImageUploadSuccess] = useState(false);
@@ -128,6 +130,25 @@ const Profile = () => {
       dispatch(deleteFailure(error.message));
     }
   };
+  const handleShowListings = async () => {
+    try {
+      const res = await fetch(`/api/user/listings/${currentUser._id}`, {
+        method: "GET",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        setErrorMessage(data.message);
+        return;
+      }
+      if (res.ok) {
+        setUserListings(data);
+        setErrorMessage(null);
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      return;
+    }
+  };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -207,7 +228,43 @@ const Profile = () => {
         <span onClick={handleDelete}>Delete account</span>
         <span onClick={handleSignOut}>Sign out</span>
       </div>
-
+      <div className="flex justify-center">
+        <button
+          onClick={handleShowListings}
+          type="button"
+          className=" self-center text-green-700 font-semibold text-center text-sm mt-5 "
+        >
+          Show Listings
+        </button>
+      </div>
+      {userListings && userListings?.length > 0 && (
+        <>
+          <h1 className="text-xl font-semibold mt-7 text-center">
+            Your Listings
+          </h1>
+          {userListings.map((listing) => (
+            <div key={listing._id} className="mt-7 shadow-md">
+              <div className="border p-3 flex items-center gap-4">
+                <Link className="">
+                  <img
+                    className="object-contain h-20 w-20"
+                    src={listing?.imageUrls[0]}
+                    alt={listing?.name}
+                  />
+                </Link>
+                <Link className="flex-1">{listing?.name}</Link>
+                <div className="flex flex-col gap-1 items-center">
+                  <p className="text-red-700 font-semibold text-sm">Delete</p>
+                  <p className="text-green-700 font-semibold text-sm" >Edit</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
+      <p className="text-red-700 text-center mt-5">
+        {errorMessage ? errorMessage : ""}
+      </p>
       <p className="text-red-700 text-center">{error ? error : ""}</p>
       <p className="text-green-700 text-center">{successMessage}</p>
     </div>
