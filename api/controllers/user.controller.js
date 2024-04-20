@@ -1,3 +1,4 @@
+import Listing from "../models/list.model.js";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 
@@ -37,4 +38,16 @@ export const DeleteAccount = async (req, res, next) => {
   await User.findByIdAndDelete(req.params.id);
   res.clearCookie("access_token");
   res.status(200).json("User is Deleted");
+};
+export const getUserListings = async (req, res, next) => {
+  try {
+    if (req.user.id !== req.params.id) {
+      return next(errorHandler(401, "You can show listings on your own !!"));
+    } else {
+      const userList = await Listing.find({ userRef: req.params.id });
+      res.status(200).json(userList);
+    }
+  } catch (error) {
+    next(error);
+  }
 };

@@ -1,5 +1,10 @@
 import express from "express";
-import { DeleteAccount, test, updateUser } from "../controllers/user.controller.js";
+import {
+  DeleteAccount,
+  getUserListings,
+  test,
+  updateUser,
+} from "../controllers/user.controller.js";
 import { verifyToken } from "../utils/verifyToken.js";
 
 const router = express.Router();
@@ -10,7 +15,8 @@ const router = express.Router();
 //   });
 // });
 router.get("/test", test);
-router.put("/update/:id", verifyToken,updateUser);
-router.delete("/delete/:id",verifyToken,DeleteAccount)
+router.put("/update/:id", verifyToken, updateUser);
+router.delete("/delete/:id", verifyToken, DeleteAccount);
+router.get("/listings/:id", verifyToken, getUserListings);
 
 export default router;
