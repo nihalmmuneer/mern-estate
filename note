@@ -140,21 +140,25 @@
 
 23. Add signout user functionality
 
-            Note: remove cookies when signout
+            Note: Remove cookies when signout
 
 24. Add create listing API route
 
-            Note: create a model for listing, list route, list controller
+            Note: Create a model for listing, list route, list controller
 
 25. Complete create listing page UI
 
-            Note: create a listing page UI
+            Note: Create a listing page UI
 
 26. Complete upload listing images functionality
 
             Note: Upload images and store in firbase storage
 
 27. Complete create listing page functionality
+
+            Note: Call post api for creating the list data
+
+28. Create get user listings API route
 
             Note: 
 
