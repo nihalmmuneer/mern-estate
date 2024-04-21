@@ -164,5 +164,9 @@
 
 29. Complete show user listings functionality
 
-            Note:             
+            Note: onClicking show user button call the api for get user listings
+
+30. Complete Delete User listing Functionality
+
+            Note: 
 
