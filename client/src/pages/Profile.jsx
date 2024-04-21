@@ -270,7 +270,9 @@ const Profile = () => {
                     alt={listing?.name}
                   />
                 </Link>
-                <Link className="flex-1">{listing?.name}</Link>
+                <Link className="flex-1 hover:underline truncate">
+                  {listing?.name}
+                </Link>
                 <div className="flex flex-col gap-1 items-center">
                   <p
                     className="text-red-700 font-semibold text-sm cursor-pointer"
@@ -278,9 +280,11 @@ const Profile = () => {
                   >
                     Delete
                   </p>
-                  <p className="text-green-700 font-semibold text-sm cursor-pointer">
-                    Edit
-                  </p>
+                  <Link to={`/update-listing/${listing?._id}`}>
+                    <p className="text-green-700 font-semibold text-sm cursor-pointer">
+                      Edit
+                    </p>
+                  </Link>
                 </div>
               </div>
             </div>
