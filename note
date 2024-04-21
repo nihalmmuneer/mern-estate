@@ -168,5 +168,9 @@
 
 30. Complete Delete User listing Functionality
 
+            Note: On clicking delete button call delete list api
+
+31. Create update listing API route
+
             Note: 
 
