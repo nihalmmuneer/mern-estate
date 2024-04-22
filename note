@@ -174,7 +174,19 @@
 
             Note: update listing Api route
 
-32.Complete Update listing functionality
+32. Complete Update listing functionality
 
-            Note: 
+            Note: on loading we need to fetch the data based on id
+                  - on uploading it will call update api to update the data
+
+33. Add image slider to the listing page
+
+            Note: npm i swipper
+                 - added a swipper to the images
+
+34. Complete Listing Page
+
+            Note:                  
+
+
 

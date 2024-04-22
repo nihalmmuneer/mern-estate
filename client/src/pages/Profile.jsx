@@ -263,14 +263,17 @@ const Profile = () => {
           {userListings.map((listing) => (
             <div key={listing._id} className="mt-7 shadow-md">
               <div className="border p-3 flex items-center gap-4">
-                <Link className="">
+                <Link to={`/listing/${listing._id}`} className="">
                   <img
                     className="object-contain h-20 w-20"
                     src={listing?.imageUrls[0]}
                     alt={listing?.name}
                   />
                 </Link>
-                <Link className="flex-1 hover:underline truncate">
+                <Link
+                  to={`/listing/${listing._id}`}
+                  className="flex-1 hover:underline truncate"
+                >
                   {listing?.name}
                 </Link>
                 <div className="flex flex-col gap-1 items-center">

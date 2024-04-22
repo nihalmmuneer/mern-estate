@@ -16,7 +16,7 @@ const CreateListing = () => {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
-  const [uploading, setUploading] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -47,11 +47,13 @@ const CreateListing = () => {
         },
         (error) => {
           setImageUploadError(error.message);
+          setUploading(false);
           reject(error);
         },
         () =>
           getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
             resolve(downloadUrl);
+            setUploading(false);
           })
       );
     });
@@ -77,12 +79,15 @@ const CreateListing = () => {
         })
         .catch((err) => {
           setImageUploadError(err.message);
+          setUploading(false);
         });
     } else if (files.length < 1) {
       setImageUploadError("You have to select atleast one image..");
+      setUploading(false);
       return;
     } else {
       setImageUploadError("You can only upload 6 images per listing.");
+      setUploading(false);
     }
   };
   console.log(formData, "formData");
@@ -148,6 +153,7 @@ const CreateListing = () => {
       setLoading(false);
     }
   };
+ 
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7 ">
