@@ -198,7 +198,11 @@
 
 37. Complete header search form functionality
 
-            Note:             
+            Note: On submiting the search input it will call an api
+
+38. Create Search Page UI
+
+            Note:                       
 
 
 
