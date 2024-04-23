@@ -4,14 +4,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { FaLocationDot } from "react-icons/fa6";
-import { FaBath, FaBed, FaChair, FaParking, FaShare } from "react-icons/fa";
+import {
+  FaBath,
+  FaBed,
+  FaChair,
+  FaParking,
+  FaPhone,
+  FaShare,
+} from "react-icons/fa";
+import { ContactLandLord } from "../components/ContactLandLord";
 // Install Swiper modules
 
 const Listing = () => {
   SwiperCore.use([Navigation]);
+  const { currentUser } = useSelector((state) => state.user);
   const params = useParams();
   const [listings, setListings] = useState();
+  const [contact, showContact] = useState(false);
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -122,6 +133,16 @@ const Listing = () => {
             <span>{listings?.furnished ? "Furnished" : "Not Furnished"}</span>
           </div>
         </div>
+        {currentUser._id !== listings?.userRef && !contact && (
+          <button
+            className=" hover:opacity-90 text-white flex justify-center items-center gap-2 uppercase bg-slate-700 p-3 w-full rounded-lg mt-5 font-sans font-semibold"
+            type="button"
+            onClick={() => showContact(true)}
+          >
+            Contact LandLord <FaPhone />
+          </button>
+        )}
+        {contact && <ContactLandLord listings={listings} />}
       </div>
     </div>
   );

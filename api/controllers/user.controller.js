@@ -42,11 +42,25 @@ export const DeleteAccount = async (req, res, next) => {
 export const getUserListings = async (req, res, next) => {
   try {
     if (req.user.id !== req.params.id) {
-      return next(errorHandler(401, "You have only access to your own listings.. !!"));
+      return next(
+        errorHandler(401, "You have only access to your own listings.. !!")
+      );
     } else {
       const userList = await Listing.find({ userRef: req.params.id });
       res.status(200).json(userList);
     }
+  } catch (error) {
+    next(error);
+  }
+};
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return next(errorHandler(401, "User not Found"));
+    }
+    const { password, ...rest } = user._doc;
+    res.status(200).json(rest);
   } catch (error) {
     next(error);
   }
