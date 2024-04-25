@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import rolling from "../../public/rolling.gif";
+import FilteredListItem from "../components/FilteredListItem";
 const Search = () => {
   const [searchSideData, setSearchSideData] = useState({
     searchTerm: "",
@@ -11,6 +13,8 @@ const Search = () => {
     order: "desc",
   });
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -67,6 +71,7 @@ const Search = () => {
     navigate(`/search?${searchQuery}`);
   };
   useEffect(() => {
+    setLoading(true);
     const urlParams = new URLSearchParams(location.search);
     // if(searchSideData?searchTerm||searchSideData?.type||searchSideData?.offer ||searchSideData?.parking||searchSideData?.furnished||searchSideData?.sort||searchSideData?.order){
     const searchTermUrl = urlParams.get("searchTerm");
@@ -88,7 +93,7 @@ const Search = () => {
       setSearchSideData({
         ...searchSideData,
         searchTerm: searchTermUrl,
-        type: typeFromUrl,
+        type: typeFromUrl || "all",
         parking: parkingFromUrl === "true" ? true : false,
         furnished: furnishedFromUrl === "true" ? true : false,
         sort: sortFromUrl || "createdAt",
@@ -103,10 +108,12 @@ const Search = () => {
       });
       const data = await res.json();
       if (data.success === false) {
+        setLoading(false);
         return;
       }
       if (res.ok) {
         setFilteredData(data);
+        setLoading(false);
       }
     };
     fetchData();
@@ -115,7 +122,7 @@ const Search = () => {
   console.log(filteredData, "fileredData");
   return (
     <div className="flex flex-col sm:flex-row">
-      <div className="border-b-2 p-6 w-full max-w-2xl md:w-auto md:border-r-2 md:min-h-screen">
+      <div className="border-b-2 p-6 w-full max-w-2xl md:w-auto md:border-r-2 md:min-h-screen flex-shrink">
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="flex items-center gap-2">
             <label className="font-semibold whitespace-nowrap">
@@ -219,11 +226,29 @@ const Search = () => {
           </button>
         </form>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 ">
         <div className="border-b-2 p-3">
           <h1 className="text-slate-700 text-2xl font-semibold mt-4 whitespace-nowrap">
             Listing results:
           </h1>
+        </div>
+        {loading && (
+          <div className="flex justify-center">
+            <img src={rolling} alt="rolling" className="w-28 h-28" />
+          </div>
+        )}
+        {!loading && filteredData?.length === 0 && (
+          <div className="p-3 text-red-500 font-semibold">
+            No Posts Available..
+          </div>
+        )}
+
+        <div className="flex flex-wrap gap-4">
+          {!loading &&
+            filteredData.length > 0 &&
+            filteredData.map((items) => (
+              <FilteredListItem filterData={items} key={items._id} />
+            ))}
         </div>
       </div>
     </div>
