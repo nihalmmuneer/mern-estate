@@ -132,9 +132,10 @@ const Profile = () => {
   };
   const handleShowListings = async () => {
     try {
-      const res = await fetch(`/api/user/listings/${currentUser._id}`, {
-        method: "GET",
-      });
+      // const res = await fetch(`/api/user/listings/${currentUser._id}`, {
+      //   method: "GET",
+      // });
+      const res = await fetch(`/api/user/listings`);
       const data = await res.json();
       if (data.success === false) {
         setErrorMessage(data.message);

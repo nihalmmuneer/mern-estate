@@ -20,6 +20,8 @@ const Header = () => {
     const searchUrlParams = urlParams.get("searchTerm");
     if (searchUrlParams) {
       setSearchTerm(searchUrlParams);
+    } else {
+      setSearchTerm("");
     }
   }, [location.search]);
   return (
@@ -38,7 +40,7 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search.."
-            className=" text-slate-700 bg-transparent w-24 sm:w-64 focus:outline-none"
+            className=" text-slate-700 bg-transparent w-24 sm:w-64 focus:outline-none "
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

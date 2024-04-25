@@ -54,6 +54,14 @@ export const getUserListings = async (req, res, next) => {
     next(error);
   }
 };
+export const getUserListingsUpdate = async (req, res, next) => {
+  try {
+    const userList = await Listing.find();
+    res.status(200).json(userList);
+  } catch (error) {
+    next(error);
+  }
+};
 export const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);

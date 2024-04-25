@@ -202,7 +202,13 @@
 
 38. Create Search Page UI
 
-            Note:                       
+            Note: Create two sessions in the page
+                    - Filter Side
+                    - Display result side
+
+39. Add onChange and onSubmit functionality to the search page
+
+            Note: 
 
 
 
