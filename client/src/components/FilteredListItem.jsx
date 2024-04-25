@@ -19,7 +19,7 @@ const FilteredListItem = ({ filterData }) => {
           </div>
           <div className="flex items-center gap-1">
             <MdLocationPin className="text-green-500" />
-            <p className="text-slate-700 text-sm">{filterData?.address}</p>
+            <p className="text-slate-700 text-sm truncate">{filterData?.address}</p>
           </div>
           <div className="text-slate-700 line-clamp-2 text-sm">
             {filterData?.description}

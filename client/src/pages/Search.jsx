@@ -15,6 +15,8 @@ const Search = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [showMore, setShowMore] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -107,18 +109,49 @@ const Search = () => {
         method: "GET",
       });
       const data = await res.json();
+      console.log(data, "data");
       if (data.success === false) {
         setLoading(false);
         return;
       }
       if (res.ok) {
         setFilteredData(data);
+        if (data?.length > 8) {
+          console.log("more");
+          setShowMore(true);
+        } else {
+          setShowMore(false);
+        }
         setLoading(false);
       }
     };
     fetchData();
     // }
   }, [location.search]);
+
+  const handleShowMore = async () => {
+    const startIndex = filteredData?.length;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/listing/get?${searchQuery}`, {
+      method: "GET",
+    });
+    const data = await res.json();
+    if (data.success === false) {
+      setLoading(false);
+      return;
+    }
+    if (res.ok) {
+      setLoading(false);
+      setFilteredData([...filteredData, ...data]);
+      if (data?.length < 9) {
+        setShowMore(false);
+      } else {
+        setShowMore(true);
+      }
+    }
+  };
   console.log(filteredData, "fileredData");
   return (
     <div className="flex flex-col sm:flex-row">
@@ -245,11 +278,19 @@ const Search = () => {
 
         <div className="flex flex-wrap gap-4">
           {!loading &&
-            filteredData.length > 0 &&
-            filteredData.map((items) => (
+            filteredData?.length > 0 &&
+            filteredData?.map((items) => (
               <FilteredListItem filterData={items} key={items._id} />
             ))}
         </div>
+        {showMore && (
+          <button
+            className="text-green-700 w-full p-3 cursor-pointer"
+            onClick={handleShowMore}
+          >
+            showMore
+          </button>
+        )}
       </div>
     </div>
   );
