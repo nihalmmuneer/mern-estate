@@ -94,7 +94,7 @@ const Search = () => {
     ) {
       setSearchSideData({
         ...searchSideData,
-        searchTerm: searchTermUrl,
+        searchTerm: searchTermUrl || "",
         type: typeFromUrl || "all",
         parking: parkingFromUrl === "true" ? true : false,
         furnished: furnishedFromUrl === "true" ? true : false,
@@ -276,7 +276,7 @@ const Search = () => {
           </div>
         )}
 
-        <div className="flex flex-wrap gap-4">
+        <div className="grid sm:grid-cols-3 gap-4 p-4">
           {!loading &&
             filteredData?.length > 0 &&
             filteredData?.map((items) => (

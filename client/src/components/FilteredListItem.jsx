@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const FilteredListItem = ({ filterData }) => {
   console.log(filterData, "filterData-Prop");
   return (
-    <div className="p-3">
-      <div className=" w-[300px]  bg-white shadow-md hover:shadow-lg overflow-hidden flex flex-col gap-2">
+    <div className="flex">
+      <div className=" rounded-lg  my-4 w-full sm:w-[300px]  bg-white shadow-md hover:shadow-lg overflow-hidden flex flex-col gap-2">
         <Link to={`/listing/${filterData?._id}`}>
           <img  
             src={filterData?.imageUrls[0]}
