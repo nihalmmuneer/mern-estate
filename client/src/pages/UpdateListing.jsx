@@ -34,7 +34,6 @@ const UpdateListing = () => {
     regularPrice: "",
     type: "rent",
   });
-  console.log(files, "files");
   const storeImage = async (files) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
@@ -88,7 +87,6 @@ const UpdateListing = () => {
       setImageUploadError("You can only upload 6 images per listing.");
     }
   };
-  console.log(formData, "formData");
   const handleRemove = (index) => {
     setFormData({
       ...formData,
@@ -159,7 +157,7 @@ const UpdateListing = () => {
       });
       const data = await res.json();
       if (data.success === false) {
-        console.log(data.message);
+        return;
       }
       if (res.ok) {
         setFormData(data);

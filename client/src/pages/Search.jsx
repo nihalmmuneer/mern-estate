@@ -49,7 +49,6 @@ const Search = () => {
       });
     }
     if (e.target.id === "sort_order") {
-      console.log(e.target.value);
       const sort = e.target.value.split("_")[0] || "createdAt";
       const order = e.target.value.split("_")[1] || "desc";
       setSearchSideData({ ...searchSideData, sort, order });
@@ -58,7 +57,6 @@ const Search = () => {
       setSearchSideData({ ...searchSideData, searchTerm: e.target.value });
     }
   };
-  console.log(searchSideData, "searchSideData");
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams();
@@ -109,7 +107,6 @@ const Search = () => {
         method: "GET",
       });
       const data = await res.json();
-      console.log(data, "data");
       if (data.success === false) {
         setLoading(false);
         return;
@@ -117,7 +114,6 @@ const Search = () => {
       if (res.ok) {
         setFilteredData(data);
         if (data?.length > 8) {
-          console.log("more");
           setShowMore(true);
         } else {
           setShowMore(false);
@@ -152,7 +148,6 @@ const Search = () => {
       }
     }
   };
-  console.log(filteredData, "fileredData");
   return (
     <div className="flex flex-col sm:flex-row">
       <div className="border-b-2 p-6 w-full max-w-2xl md:w-auto md:border-r-2 md:min-h-screen flex-shrink">
@@ -276,7 +271,7 @@ const Search = () => {
           </div>
         )}
 
-        <div className="grid sm:grid-cols-3 gap-4 p-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           {!loading &&
             filteredData?.length > 0 &&
             filteredData?.map((items) => (

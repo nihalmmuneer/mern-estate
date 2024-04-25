@@ -55,7 +55,6 @@ const Home = () => {
       }
     };
   }, []);
-  console.log(offerListings);
   return (
     <div>
       <div className="p-6 sm:p-16 my-7 sm:max-w-6xl mx-auto">

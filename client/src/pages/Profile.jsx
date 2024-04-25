@@ -44,7 +44,6 @@ const Profile = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-  console.log(formData, "formData");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,7 +71,6 @@ const Profile = () => {
     }
   };
   const handleFileUpload = (file) => {
-    console.log(file, "file");
     const storage = getStorage(app);
     const filename = new Date().getTime() + file.name;
     const storageRef = ref(storage, filename);
@@ -132,9 +130,6 @@ const Profile = () => {
   };
   const handleShowListings = async () => {
     try {
-      // const res = await fetch(`/api/user/listings/${currentUser._id}`, {
-      //   method: "GET",
-      // });
       const res = await fetch(`/api/user/listings`);
       const data = await res.json();
       if (data.success === false) {

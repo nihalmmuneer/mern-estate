@@ -31,7 +31,6 @@ const CreateListing = () => {
     regularPrice: "",
     type: "rent",
   });
-  console.log(files, "files");
   const storeImage = async (files) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
@@ -90,7 +89,6 @@ const CreateListing = () => {
       setUploading(false);
     }
   };
-  console.log(formData, "formData");
   const handleRemove = (index) => {
     setFormData({
       ...formData,

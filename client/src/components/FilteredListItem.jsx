@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { MdLocationPin } from "react-icons/md";
 import { Link } from "react-router-dom";
 const FilteredListItem = ({ filterData }) => {
-  console.log(filterData, "filterData-Prop");
   return (
     <div className="flex">
       <div className=" rounded-lg  my-4 w-full sm:w-[300px]  bg-white shadow-md hover:shadow-lg overflow-hidden flex flex-col gap-2">

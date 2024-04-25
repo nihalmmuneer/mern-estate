@@ -4,7 +4,6 @@ import { IoIosSend } from "react-icons/io";
 import { Link } from "react-router-dom";
 export const ContactLandLord = ({ listings }) => {
   const [LandLord, setLandLord] = useState(null);
-  console.log(listings);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export const ContactLandLord = ({ listings }) => {
     };
     fetchLandLord();
   }, []);
-  console.log(message, "message");
   return (
     <div className="mt-5 flex flex-col gap-4">
       <p className="flex gap-1 text-sm">
