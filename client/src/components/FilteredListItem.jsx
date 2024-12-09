@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import { MdLocationPin } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 const FilteredListItem = ({ filterData }) => {
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div className="flex">
       <div className=" rounded-lg  my-4 w-full sm:w-[300px]  bg-white shadow-md hover:shadow-lg overflow-hidden flex flex-col gap-2">
-        <Link to={`/listing/${filterData?._id}`}>
-          <img  
+        <Link to={ currentUser ? `/listing/${filterData?._id}`:`/sign-in`}>
+          <img
             src={filterData?.imageUrls[0]}
             alt={filterData?.name}
             className="w-full hover:scale-105 h-[200px] transition-scale transition-transform"
@@ -18,7 +20,9 @@ const FilteredListItem = ({ filterData }) => {
           </div>
           <div className="flex items-center gap-1">
             <MdLocationPin className="text-green-500" />
-            <p className="text-slate-700 text-sm truncate">{filterData?.address}</p>
+            <p className="text-slate-700 text-sm truncate">
+              {filterData?.address}
+            </p>
           </div>
           <div className="text-slate-700 line-clamp-2 text-sm">
             {filterData?.description}
