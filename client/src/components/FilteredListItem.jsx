@@ -2,33 +2,40 @@ import PropTypes from "prop-types";
 import { MdLocationPin } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-const FilteredListItem = ({ filterData }) => {
+
+const FilteredListItem = ({ filterData = {} }) => {
   const { currentUser } = useSelector((state) => state.user);
+
+  const bedrooms = Array.isArray(filterData?.bedrooms) ? filterData.bedrooms.length : 0;
+  const bathrooms = Array.isArray(filterData?.bathrooms) ? filterData.bathrooms.length : 0;
+
   return (
     <div className="flex">
-      {filterData ? (
-        <img src="/rolling.gif" alt="rolling-gif" />
+      {!filterData ? (
+        <div className="flex justify-center items-center w-full h-64">
+          <img src="/rolling.gif" alt="Loading..." className="h-16 w-16" />
+        </div>
       ) : (
-        <div className=" rounded-lg  my-4 w-full sm:w-[300px]  bg-white shadow-md hover:shadow-lg overflow-hidden flex flex-col gap-2">
+        <div className="rounded-lg my-4 w-full sm:w-[300px] bg-white shadow-md hover:shadow-lg overflow-hidden flex flex-col gap-2">
           <Link to={currentUser ? `/listing/${filterData?._id}` : `/sign-in`}>
             <img
-              src={filterData?.imageUrls[0]}
-              alt={filterData?.name}
+              src={filterData?.imageUrls?.[0] || "/placeholder-image.png"}
+              alt={filterData?.name || "Property"}
               className="w-full hover:scale-105 h-[200px] transition-scale transition-transform"
             />
           </Link>
           <div className="p-2 flex flex-col gap-2">
             <div className="truncate text-slate-800 font-bold">
-              {filterData?.name}
+              {filterData?.name || "Unknown Property"}
             </div>
             <div className="flex items-center gap-1">
               <MdLocationPin className="text-green-500" />
               <p className="text-slate-700 text-sm truncate">
-                {filterData?.address}
+                {filterData?.address || "No Address Available"}
               </p>
             </div>
             <div className="text-slate-700 line-clamp-2 text-sm">
-              {filterData?.description}
+              {filterData?.description || "No Description Available"}
             </div>
             <div className="text-slate-500 font-semibold">
               {filterData?.offer
@@ -38,14 +45,10 @@ const FilteredListItem = ({ filterData }) => {
             </div>
             <div className="flex items-center gap-3 text-slate-700 font-medium text-sm">
               <div>
-                {filterData?.bedrooms?.length > 1
-                  ? `${filterData?.bedrooms} beds`
-                  : `${filterData?.bedrooms} bed`}
+                {bedrooms > 1 ? `${bedrooms} beds` : `${bedrooms} bed`}
               </div>
               <div>
-                {filterData?.bathrooms?.length > 1
-                  ? `${filterData?.bathrooms} baths`
-                  : `${filterData?.bathrooms} bath`}
+                {bathrooms > 1 ? `${bathrooms} baths` : `${bathrooms} bath`}
               </div>
             </div>
           </div>
@@ -55,8 +58,8 @@ const FilteredListItem = ({ filterData }) => {
   );
 };
 
-export default FilteredListItem;
-
 FilteredListItem.propTypes = {
   filterData: PropTypes.object.isRequired,
 };
+
+export default FilteredListItem;
